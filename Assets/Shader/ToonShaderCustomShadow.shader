@@ -20,6 +20,8 @@
             
             _Smoothness ("Smoothness", Float) = 16.0
             _RimSharpness ("Rim Sharpness", Float) = 16.0
+            _Levels("ShadowStep", range(2,10)) = 2
+            _PercentShadow("ShadowCoverage", Range(-.25,.75)) = .25
 
             [HDR] _RimColor ("Rim Color", Color) = (1.0, 1.0, 1.0)
             [HDR] _WorldColor ("Shadow Color", Color) = (0.1, 0.1, 0.1)

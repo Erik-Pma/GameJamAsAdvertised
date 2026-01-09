@@ -28,6 +28,8 @@ CBUFFER_START(UnityPerMaterial)
        float3 _SColor;
        float _Smoothness;
        float _RimSharpness;
+       float _Levels;
+       float _PercentShadow;
        float3 _RimColor;
        float3 _WorldColor;
 CBUFFER_END
@@ -75,14 +77,7 @@ struct Varyings
 ///////////////////////////////////////////////////////////////////////////////
 // This is a global variable, Unity sets it for us.
 float3 _LightDirection;
-/*
-This is a simple lighting transformation.
-Normally, we just return the WorldToHClip position.
-During the Shadow Pass, we want to make sure that Shadow Bias is baked 
-in to the shadow map. To accomplish this, we use the ApplyShadowBias
-method to push the world-space positions in their normal direction by the bias amount.
-We define SHADOW_CASTER_PASS during the setup for the Shadow Caster pass.
-*/
+
 float4 GetClipSpacePosition(float3 positionWS, float3 normalWS)
 {
        #if defined(SHADOW_CASTER_PASS)
@@ -99,14 +94,7 @@ float4 GetClipSpacePosition(float3 positionWS, float3 normalWS)
        
        return TransformWorldToHClip(positionWS);
 }
-/*
-These two functions give us the shadow coordinates 
-depending on whether screen shadows are enabled or not.
-We have two methods here, one with two args (positionWS
-and positionHCS), and one with just positionWS.
-The two-arg method is faster when you have 
-already calculated the positionHCS variable.
-*/
+
 float4 GetMainLightShadowCoord(float3 positionWS, float4 positionHCS)
 {
        #if defined(_MAIN_LIGHT_SHADOWS_SCREEN)
@@ -124,17 +112,7 @@ float4 GetMainLightShadowCoord(float3 PositionWS)
     return TransformWorldToShadowCoord(PositionWS);
        #endif
 }
-/*
-This method gives us the main light as an out parameter.
-The Light struct is defined in 
-"Packages/com.unity.render-pipelines.universal/ShaderLibrary/RealtimeLights.hlsl",
-so you can reference it there for more details on its fields.
-This version of the GetMainLight method doesn't account for Light Cookies.
-To account for Light cookies, you need to add the following line to your shader pass:
-#pragma multi_compile _ _LIGHT_COOKIES
-and also call a different GetMainLight method:
-GetMainLight(float4 shadowCoord, float3 positionWS, half4 shadowMask)
-*/
+
 void GetMainLightData(float3 PositionWS, out Light light)
 {
        float4 shadowCoord = GetMainLightShadowCoord(PositionWS);
@@ -148,11 +126,6 @@ float easysmoothstep(float min, float x)
 ///////////////////////////////////////////////////////////////////////////////
 //                      Functions                                            //
 ///////////////////////////////////////////////////////////////////////////////
-/*
-The Vertex function is responsible 
-for generating and manipulating the 
-data for each vertex of the mesh.
-*/
 Varyings Vertex(Attributes IN)
 {
        Varyings OUT = (Varyings)0;
@@ -174,11 +147,6 @@ Varyings Vertex(Attributes IN)
        
        return OUT;
 }
-/*
-The FragmentDepthOnly function is responsible 
-for handling per-pixel shading during the 
-DepthOnly and ShadowCaster passes.
-*/
 float FragmentDepthOnly(Varyings IN) : SV_Target
 {
        // These macros are required for VR SPI compatibility
@@ -187,12 +155,6 @@ float FragmentDepthOnly(Varyings IN) : SV_Target
        
        return 0;
 }
-/*
-The FragmentDepthNormalsOnly function is responsible 
-for handling per-pixel shading during the 
-DepthNormalsOnly pass. This pass is less common, but
-can be required by some post-process effects such as SSAO.
-*/
 float4 FragmentDepthNormalsOnly(Varyings IN) : SV_Target
 {
        // These macros are required for VR SPI compatibility
@@ -214,10 +176,11 @@ float3 Fragment(Varyings IN) : SV_Target
        Light light;
        GetMainLightData(IN.positionWS, light);
        
-       float NoL =  dot(IN.normalWS, light.direction);
-
-       float toonLighting = easysmoothstep(0,NoL);
-       //for shadows the get cast to this object 
+       float NoL =  dot(IN.normalWS, light.direction) + _PercentShadow;
+       
+       float toonLighting = floor(saturate(NoL) * (_Levels + 1.0)) / _Levels;
+       toonLighting = saturate(toonLighting);
+       
        float toonShadows = easysmoothstep(0.5, light.shadowAttenuation );
 
        float3 halfVector = normalize(light.direction + IN.viewDirectionWS);
@@ -251,7 +214,7 @@ float3 Fragment(Varyings IN) : SV_Target
        float3 shadowedColor = lerp(surfaceColor, _WorldColor, shadowTexture.r); 
        
        float3 litColor = surfaceColor * finalLighting; 
-       
+       //combine the two
        float3 finalOutput = lerp(litColor, shadowedColor, shadowMask);
 
        return finalOutput;
