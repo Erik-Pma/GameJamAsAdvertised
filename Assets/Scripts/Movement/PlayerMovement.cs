@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     
     Transform _cameraTransform;
 
+    private float _xRotation;
+
     [SerializeField] float _moveSpeed = 5.0f;
     private void Awake()
     {
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         _moveAction = _playerInput.actions.FindAction("Move");
         _cameraAction = _playerInput.actions.FindAction("Camera");
         _cameraTransform = GetComponentInChildren<Transform>();
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -36,5 +38,13 @@ public class PlayerMovement : MonoBehaviour
     void MoveCamera()
     {
         Debug.Log(_cameraAction.ReadValue<Vector2>());
+        
+        float mouseX = _cameraAction.ReadValue<Vector2>().x * 10* Time.deltaTime;
+        float mouseY = _cameraAction.ReadValue<Vector2>().y * 50* Time.deltaTime;
+        
+        _xRotation -= mouseY;
+        _xRotation =  Mathf.Clamp(_xRotation, -80f, 90f);
+        
+        _cameraTransform.localRotation = Quaternion.Euler( _xRotation,0 , 0);
     }
 }
