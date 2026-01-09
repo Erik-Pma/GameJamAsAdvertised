@@ -28,7 +28,7 @@ namespace Movement
         }
 
         // Update is called once per frame
-        void FixedUpdate()
+        void Update()
         {
             _lookAmt = _move.lookAction.ReadValue<Vector2>();
             if (transform.position.y < -7)

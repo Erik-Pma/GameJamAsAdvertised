@@ -1,7 +1,7 @@
  // This is the name of the Shader in the inspector. You can set
     // directory hierarchy using forward slashes, like shown here.
     
-    Shader"My Custom Shaders/Toon Shader"
+    Shader"Erik/Toon Shader"
     {
         
     
