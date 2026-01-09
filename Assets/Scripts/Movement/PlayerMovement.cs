@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         _moveAction = actionAsset.FindAction("Move");
         _lookAction = actionAsset.FindAction("Look");
         _cameraTransform = GetComponentInChildren<Transform>();
