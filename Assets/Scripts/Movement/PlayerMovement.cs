@@ -43,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
         float mouseY = _cameraAction.ReadValue<Vector2>().y * 50* Time.deltaTime;
         
         _xRotation -= mouseY;
-        _xRotation =  Mathf.Clamp(_xRotation, -80f, 90f);
+        _xRotation =  Mathf.Clamp(_xRotation, -90f, 90f);
         
         _cameraTransform.localRotation = Quaternion.Euler( _xRotation,0 , 0);
+        transform.RotateAround(transform.position, Vector3.up, mouseX); 
     }
 }
