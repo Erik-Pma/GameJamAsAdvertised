@@ -1,51 +1,66 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerInput _playerInput;
+    public InputActionAsset actionAsset;
     
-    InputAction _moveAction;
-    InputAction _cameraAction;
-    
-    Transform _cameraTransform;
+    private InputAction _moveAction;
+    private InputAction _lookAction;
 
+    private Vector2 _moveAmt;
+    private Vector2 _lookAmt;
     private float _xRotation;
+        
+    public float moveSpeed = 5.0f;
+    public float rotationSpeed = 5.0f;
+    
+    private Transform _cameraTransform;
+    private void OnEnable()
+    {
+        actionAsset.FindActionMap("Movement").Enable();
+    }
 
-    [SerializeField] float _moveSpeed = 5.0f;
+    private void OnDisable()
+    {
+        actionAsset.FindActionMap("Movement").Disable();
+    }
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        _moveAction = _playerInput.actions.FindAction("Move");
-        _cameraAction = _playerInput.actions.FindAction("Camera");
+        _moveAction = actionAsset.FindAction("Move");
+        _lookAction = actionAsset.FindAction("Look");
         _cameraTransform = GetComponentInChildren<Transform>();
-        Cursor.lockState = CursorLockMode.Locked;
     }
-
     private void Update()
     {
-        MovePlayer();
-        MoveCamera();
+        _moveAmt = _moveAction.ReadValue<Vector2>();
+        _lookAmt = _lookAction.ReadValue<Vector2>();
     }
 
-    void MovePlayer()
+    private void FixedUpdate()
     {
-        Debug.Log(_moveAction.ReadValue<Vector2>());
-        Vector2 direction = _moveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(direction.x, 0, direction.y) * Time.deltaTime * _moveSpeed;
+        Movement();
+        Rotating();
     }
 
-    void MoveCamera()
+    private void Movement()
     {
-        Debug.Log(_cameraAction.ReadValue<Vector2>());
-        
-        float mouseX = _cameraAction.ReadValue<Vector2>().x * 10* Time.deltaTime;
-        float mouseY = _cameraAction.ReadValue<Vector2>().y * 50* Time.deltaTime;
+        //Debug.Log(_moveAmt);
+        Vector3 movementVector = (transform.forward * _moveAmt.y + transform.right * _moveAmt.x) *moveSpeed * Time.deltaTime;
+        transform.position += movementVector;
+    }
+
+    private void Rotating()
+    {
+        //Debug.Log(_lookAmt);
+        float mouseX = _lookAmt.x * rotationSpeed * Time.deltaTime;
+        float mouseY = _lookAmt.y * rotationSpeed * Time.deltaTime;
         
         _xRotation -= mouseY;
-        _xRotation =  Mathf.Clamp(_xRotation, -90f, 90f);
+        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
         
-        _cameraTransform.localRotation = Quaternion.Euler( _xRotation,0 , 0);
-        transform.RotateAround(transform.position, Vector3.up, mouseX); 
+        //_cameraTransform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);   
     }
 }
