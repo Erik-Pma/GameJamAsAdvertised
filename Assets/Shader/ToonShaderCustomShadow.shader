@@ -3,12 +3,6 @@
     
     Shader"My Custom Shaders/Toon Shader"
     {
-        // The properties block enables you to edit and save the defined
-        // Material properties.
-        //
-        // If you don't define anything here, you can still set properties
-        // by code, but you can't edit properties from the inspector, and
-        // changes don't persist between sessions.
         
     
         Properties
@@ -20,7 +14,7 @@
             
             _Smoothness ("Smoothness", Float) = 16.0
             _RimSharpness ("Rim Sharpness", Float) = 16.0
-            _Levels("ShadowStep", range(2,10)) = 2
+            _Levels("ShadowStep", range(1,10)) = 2
             _PercentShadow("ShadowCoverage", Range(-.25,.75)) = .25
 
             [HDR] _RimColor ("Rim Color", Color) = (1.0, 1.0, 1.0)

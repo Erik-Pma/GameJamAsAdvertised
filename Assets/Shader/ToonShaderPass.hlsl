@@ -177,25 +177,29 @@ float3 Fragment(Varyings IN) : SV_Target
        GetMainLightData(IN.positionWS, light);
        
        float NoL =  dot(IN.normalWS, light.direction) + _PercentShadow;
-       
+       // the light and shadow for cel shading/tooning
        float toonLighting = floor(saturate(NoL) * (_Levels + 1.0)) / _Levels;
        toonLighting = saturate(toonLighting);
-       
+       //showdows cast on the object
        float toonShadows = easysmoothstep(0.5, light.shadowAttenuation );
 
+       // the specular ligthing part the little bright part on  it
        float3 halfVector = normalize(light.direction + IN.viewDirectionWS);
        float NoH =  max(dot(IN.normalWS, halfVector), 0);
        float specularTerm = pow(NoH, _Smoothness * _Smoothness);
        specularTerm *= toonLighting * toonShadows;
        specularTerm *= easysmoothstep(0.01, specularTerm);
-       
+
+       // rim light
        float NoV = max(dot(IN.normalWS, IN.viewDirectionWS), 0);
        float rimTerm = pow(1.0 - NoV, _RimSharpness);
        rimTerm *= toonLighting * toonShadows;
        rimTerm = easysmoothstep(0.01, rimTerm);
-       
+
+       //the base texture
        float3 surfaceColor = _Color * SAMPLE_TEXTURE2D(_ColorMap, sampler_ColorMap, IN.uv);
-       
+
+       //adding things together to het ligh shadows specular light
        float3 directionalLighting = toonLighting * toonShadows * light.color;
        float3 specularLighting = specularTerm * light.color;
        float3 rimLighting = rimTerm * _RimColor;
