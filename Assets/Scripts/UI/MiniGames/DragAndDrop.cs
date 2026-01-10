@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace UI.MiniGames
 {
-    public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler,IDragHandler
+    public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler,IDragHandler
     {
         [SerializeField] private Canvas canvas;
         
@@ -19,26 +16,21 @@ namespace UI.MiniGames
             
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Debug.Log("OnPointerDown");
-        }
-
         public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log("OnBeginDrag");
+            //Debug.Log("OnBeginDrag");
             _canvasGroup.blocksRaycasts = false;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log("OnEndDrag");
+            //Debug.Log("OnEndDrag");
             _canvasGroup.blocksRaycasts = true;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnDrag");
+            //Debug.Log("OnDrag");
             _rectTransform.anchoredPosition += eventData.delta;
         }
     }
