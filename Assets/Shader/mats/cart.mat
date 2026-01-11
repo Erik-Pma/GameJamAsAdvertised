@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: plank
+  m_Name: cart
   m_Shader: {fileID: 4800000, guid: 0d9acd2fd14a4d7428288c63c72e4e31, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ColorMap:
-        m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 2800000, guid: 788b4fb55305adb47bf8ae5e53bdd665, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -133,14 +133,14 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.31132078, g: 0.18138003, b: 0.071956225, a: 1}
+    - _Color: {r: 0.6594874, g: 0.6612911, b: 0.7169812, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0.0121259205, b: 0.6509804, a: 1}
     - _SColor: {r: 1, g: 1, b: 1, a: 1}
     - _SPColor: {r: 1, g: 0.5090909, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tilling: {r: 8.15, g: 1.3, b: 0, a: 0}
-    - _WorldColor: {r: 0.25882354, g: 0.054901958, b: 0.119995095, a: 1}
+    - _Tilling: {r: 5, g: 20, b: 0, a: 0}
+    - _WorldColor: {r: 0.03862584, g: 0.26415092, b: 0.24721184, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2844641576354452589
 MonoBehaviour:
