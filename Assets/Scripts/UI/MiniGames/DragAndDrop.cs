@@ -12,8 +12,7 @@ namespace UI.MiniGames
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
-            
-            
+            _canvasGroup = GetComponent<CanvasGroup>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)

@@ -33,10 +33,10 @@ Shader "Erik/Billboard"
 
             TEXTURE2D(_BaseMap);
             SAMPLER(sampler_BaseMap);
-
-            half4 _BaseColor;
+            
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseMap_ST;
+                half4 _BaseColor;
             CBUFFER_END
 
             Varyings vert(Attributes IN)

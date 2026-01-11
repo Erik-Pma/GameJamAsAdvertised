@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 namespace UI.InWorld
@@ -13,6 +11,7 @@ namespace UI.InWorld
         protected bool interationAmt;
         private BoxCollider _collider;
         public GameObject game;
+        public Renderer renderer;
 
         private void Start()
         {
@@ -44,7 +43,8 @@ namespace UI.InWorld
 
         private void UpdateUI(Color color)
         {
-            Shader.SetGlobalColor("_BaseColor", color);
+            if(renderer != null)
+                renderer.material.SetColor("_BaseColor", color);
         }
 
         protected abstract void Interact();
