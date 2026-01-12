@@ -11,7 +11,7 @@ namespace UI.InWorld
         protected bool interationAmt;
         private BoxCollider _collider;
         public GameObject game;
-        public Renderer renderer;
+        public new Renderer renderer;
 
         private void Start()
         {
