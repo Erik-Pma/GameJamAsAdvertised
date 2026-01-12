@@ -12,6 +12,8 @@ public class MoveWithMouse : MonoBehaviour
     private Vector3 _clampedPosition = Vector3.zero;
     [SerializeField] private Vector2 clampX;
     [SerializeField] private Vector2 clampY;
+    [ReadOnly]
+    [SerializeField]private DropAndRespawn _dropAndRespawn;
     
     // We don't strictly need _held anymore, checking if _item != null is enough
     private Transform _item; 
@@ -28,6 +30,7 @@ public class MoveWithMouse : MonoBehaviour
     private void Awake()
     {
         transform.position = _offset;
+        
     }
 
     private void Update()
@@ -51,7 +54,13 @@ public class MoveWithMouse : MonoBehaviour
         // If the button is NOT pressed, drop everything.
         if (!_pickupAmt)
         {
-            _item = null;
+            if (_item != null)
+            {
+                _dropAndRespawn.RigidbodyActive();
+                _item = null;
+                _dropAndRespawn = null;
+            }
+
             return;
         }
 
@@ -67,6 +76,7 @@ public class MoveWithMouse : MonoBehaviour
                 {
                     Debug.Log("Picked up: " + hit.transform.name);
                     _item = hit.transform;
+                    _dropAndRespawn = _item.gameObject.GetComponent<DropAndRespawn>();
                 }
             }
         }
