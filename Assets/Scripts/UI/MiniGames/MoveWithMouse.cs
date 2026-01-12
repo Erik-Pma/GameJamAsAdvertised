@@ -9,15 +9,15 @@ public class MoveWithMouse : MonoBehaviour
     private Vector3 _offset = new Vector3(0, 0, 3);
     [SerializeField] private Camera camera;
 
-    
-    private void Awake()
+    private void OnEnable()
     {
-        //_moveAction = actionAsset.FindAction("Move");
+        _moveAction = actionAsset.FindAction("MoveCursor");
+        transform.position = _offset;
     }
 
     private void Update()
     {
-        //_moveAmt = _moveAction.ReadValue<Vector2>();
-        transform.position = camera.ScreenToWorldPoint(Input.mousePosition) + _offset;
+        _moveAmt = _moveAction.ReadValue<Vector2>();
+        transform.position = new Vector3(_moveAmt.x/1000 + transform.position.x, _moveAmt.y/1000 + transform.position.y, _offset.z) ;
     }
 }

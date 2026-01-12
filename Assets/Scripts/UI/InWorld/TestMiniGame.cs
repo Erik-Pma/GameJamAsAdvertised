@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace UI.InWorld
 {
@@ -7,12 +8,14 @@ namespace UI.InWorld
     {
         private InputAction _closeAction;
         private bool _closeAmt;
+        
         protected override void Interact()
         {
             if (interationAmt)
             {
                 actionAsset.FindActionMap("Movement").Disable();
                 actionAsset.FindActionMap("MiniGames").Enable();
+                SceneManager.LoadScene("MiniGame",LoadSceneMode.Additive);
                 _closeAction = actionAsset.FindAction("Close");
                 game.SetActive(true);
             }
@@ -20,8 +23,8 @@ namespace UI.InWorld
             if (_closeAction != null && actionAsset.FindActionMap("MiniGames").enabled)
             {
                 _closeAmt = _closeAction.IsPressed();
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
+                //Cursor.lockState = CursorLockMode.Confined;
+                //Cursor.visible = true;
                 if (_closeAmt)
                 {
                     CloseMiniGame();
@@ -34,8 +37,9 @@ namespace UI.InWorld
         {
             actionAsset.FindActionMap("Movement").Enable();
             actionAsset.FindActionMap("MiniGames").Disable();
+            SceneManager.UnloadSceneAsync("MiniGame");
             game.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
