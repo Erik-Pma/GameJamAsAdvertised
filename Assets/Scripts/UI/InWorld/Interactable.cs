@@ -37,7 +37,8 @@ namespace UI.InWorld
             if (other.CompareTag("Player"))
             {
                 UpdateUI(Color.gray);
-                game.SetActive(false);
+                if(game != null)
+                    game.SetActive(false);
             }
         }
 

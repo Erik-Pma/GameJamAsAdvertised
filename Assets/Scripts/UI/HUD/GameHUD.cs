@@ -1,24 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameHUD : MonoBehaviour
 {
-    [SerializeField]TMPro.TMP_Text money;
-    private int _moneyAmount = 0;
-    [SerializeField]TMPro.TMP_Text order;
+    public TMPro.TMP_Text money;
+    public int moneyAmount = 0;
+    public TMPro.TMP_Text order;
+    [SerializeField]private InventoryController inventory;
     
     
 
     private void Start()
     {
-        money.text = "Money: " + _moneyAmount;
+        money.text = "Money: " + moneyAmount;
         order.text = "Order: " + GetOrder();
     }
 
-    private String GetOrder()
+    private string GetOrder()
     {
-        return "this is a test";
+        return inventory.CreatOrder();
     }
 }

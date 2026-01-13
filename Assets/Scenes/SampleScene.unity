@@ -240,7 +240,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: {fileID: 1117600322}
+  moneyAmount: 0
   order: {fileID: 1526007777}
+  inventory: {fileID: 1893025756}
 --- !u!20 &330585545 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 226687447615971592, guid: fff21ecff5b7f284c979f51a4fed6df1,
@@ -1807,13 +1809,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788940906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bafa3dbb246f1a94abf24846d2303db7, type: 3}
+  m_Script: {fileID: 11500000, guid: 337a79ac3a09ed1479661465c7182e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionAsset: {fileID: -944628639613478452, guid: e06f91ed644b7d044aa53720c7baeaa7,
     type: 3}
-  game: {fileID: 351523139}
+  game: {fileID: 0}
   renderer: {fileID: 611031629}
+  inventory: {fileID: 1893025756}
+  gameHUD: {fileID: 139718231}
 --- !u!1 &1815913430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,6 +1939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inven: {fileID: 345921946}
+  gameHUD: {fileID: 139718231}
 --- !u!1001 &597596845873970691
 PrefabInstance:
   m_ObjectHideFlags: 0
