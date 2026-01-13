@@ -13,8 +13,7 @@ public class InventoryController : MonoBehaviour
 
     private void Update()
     {
-
-        inven.text = "Inventory: " + PrintDictionary();
+        inven.text = "Inventory: \n" + PrintDictionary();
     }
 
     private string PrintDictionary()
@@ -22,8 +21,9 @@ public class InventoryController : MonoBehaviour
         string result = "";
         foreach (KeyValuePair<Item, int> pair in items)
         {
-            result = pair.Key.ToString() + ": " + pair.Value.ToString()+ "/n";
+            result += pair.Key.ToString() + ": " + pair.Value.ToString()+ "\n";
         }
+        Debug.Log(result);
         return result;
     }
 

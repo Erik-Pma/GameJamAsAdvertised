@@ -9,6 +9,7 @@ public class GameHUD : MonoBehaviour
     private int _moneyAmount = 0;
     [SerializeField]TMPro.TMP_Text order;
     
+    
 
     private void Start()
     {
