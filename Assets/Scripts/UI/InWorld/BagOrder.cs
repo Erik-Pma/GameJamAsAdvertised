@@ -11,7 +11,7 @@ public class BagOrder : Interactable
         {
             if (inventory.CompleteOrder())
             {
-                gameHUD.moneyAmount = Random.Range(5, 20);
+                gameHUD.moneyAmount += Random.Range(5, 20);
                 gameHUD.money.text = "Money: " + gameHUD.moneyAmount;
             }
         }

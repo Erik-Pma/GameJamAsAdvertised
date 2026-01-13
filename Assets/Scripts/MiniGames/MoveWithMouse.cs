@@ -8,7 +8,7 @@ public class MoveWithMouse : MonoBehaviour
     private InputAction _pickupAction;
     private Vector2 _moveAmt;
     private bool _pickupAmt;
-    private Vector3 _offset = new Vector3(0, 0, 3);
+    [SerializeField]private Vector3 _offset = new Vector3(0, 0, 3);
     private Vector3 _clampedPosition = Vector3.zero;
     [SerializeField] private Vector2 clampX;
     [SerializeField] private Vector2 clampY;

@@ -8,6 +8,7 @@ namespace UI.InWorld
     {
         private InputAction _closeAction;
         private bool _closeAmt;
+        [SerializeField] string sceneName;
         
         protected override void Interact()
         {
@@ -15,7 +16,7 @@ namespace UI.InWorld
             {
                 actionAsset.FindActionMap("Movement").Disable();
                 actionAsset.FindActionMap("MiniGames").Enable();
-                SceneManager.LoadScene("MiniGame",LoadSceneMode.Additive);
+                SceneManager.LoadScene(sceneName,LoadSceneMode.Additive);
                 _closeAction = actionAsset.FindAction("Close");
                 game.SetActive(true);
             }
@@ -37,7 +38,7 @@ namespace UI.InWorld
         {
             actionAsset.FindActionMap("Movement").Enable();
             actionAsset.FindActionMap("MiniGames").Disable();
-            SceneManager.UnloadSceneAsync("MiniGame");
+            SceneManager.UnloadSceneAsync(sceneName);
             game.SetActive(false);
             //Cursor.lockState = CursorLockMode.Locked;
         }

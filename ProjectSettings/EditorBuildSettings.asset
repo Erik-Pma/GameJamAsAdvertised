@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame.unity
     guid: 1174428f63f06e34d99683105382b017
+  - enabled: 1
+    path: Assets/Scenes/FruitGame.unity
+    guid: b07eca042aded1343aee689b35af5ef8
   m_configObjects: {}

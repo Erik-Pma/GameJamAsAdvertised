@@ -65,6 +65,7 @@ namespace Movement
             {
                 _menu.gameObject.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
             else
             {
