@@ -14,6 +14,11 @@ namespace Movement
 
         private Vector2 _moveAmt;
         private float _xRotation;
+        private InputAction _menuAction;
+        private bool _menuAmt;
+        private bool _turnoff;
+        [SerializeField]private GameObject _menu;
+        
         [Header("values")] public float moveSpeed = 5.0f;
         [Header("CharacterController")] public CharacterController controller;
 
@@ -32,11 +37,17 @@ namespace Movement
             Cursor.lockState = CursorLockMode.Locked;
             _moveAction = actionAsset.FindAction("Move");
             lookAction = actionAsset.FindAction("Look");
+            _menuAction = actionAsset.FindAction("Menu");
         }
 
         private void Update()
         {
             _moveAmt = _moveAction.ReadValue<Vector2>();
+            _menuAmt = _menuAction.WasCompletedThisDynamicUpdate();
+            if (_menuAmt)
+            {
+                Menu();
+            }
             Movement();
         }
 
@@ -45,6 +56,21 @@ namespace Movement
             //Debug.Log(_moveAmt);
             Vector3 movementVector = moveSpeed * Time.deltaTime * (transform.forward * _moveAmt.y + transform.right * _moveAmt.x);
             controller.Move(movementVector);
+        }
+
+        private void Menu()
+        {
+            _turnoff = !_turnoff;
+            if (_turnoff)
+            {
+                _menu.gameObject.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                _menu.gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 }
