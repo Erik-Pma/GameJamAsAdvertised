@@ -8,7 +8,7 @@ namespace UI.InWorld
     {
         private InputAction _closeAction;
         private bool _closeAmt;
-        [SerializeField] string sceneName;
+        [SerializeField] string sceneName = "FruitGame";
         
         protected override void Interact()
         {
